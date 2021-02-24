@@ -7,7 +7,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>
         {% block title %}
-            My Site
+            PokéPress
         {% endblock title %}
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,8 +33,8 @@
 <nav class="navbar navbar-expand-md">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <!-- Add your logo here!  <img src="" /> -->
-            My Site
+            <img style='height:30px; width:30px' src="{% static 'images/pokemon_logo.png' %}" />
+            PokéPress
         </a>
 
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,13 +46,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">Start</a>
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                    <a class="nav-link" href="{% url 'about' %}">Pokédex</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'view_all_users' %}">Users</a>
+                    <a class="nav-link" href="{% url 'view_all_users' %}">Profiles</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
