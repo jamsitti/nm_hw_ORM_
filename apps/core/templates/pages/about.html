@@ -11,8 +11,25 @@
 <p>Need to put in a drop down bar that will show a pokemon </p>
 <p>Need to put in a page that displays an object
     must show pokemon png, name, type, and stats on a wide scale not the mini scale,
-    also need a button that allows adding to your team (unless you have 6)
-</p>
+    also need a button that allows adding to your team (unless you have 6)</p>
+<!-- This form will be the drop down menu of pokemon names -->
+<form action="" method="GET">
+    <div class='row'>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Pokémon
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Bulbasaur</a>
+            <a class="dropdown-item" href="#">Bulbasaur</a>
+            <!--Loop through pokedex object and show each pokemon name-->
+            <!--this dropdown currently is not working so that sucks-->
+            </div>
+        </div>
+        <button type="button" class="btn btn-danger">GO!</button>
+        </div>
+    </div>
+</form>
 
 {% endblock content %}
 
