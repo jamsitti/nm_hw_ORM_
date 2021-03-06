@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+    PokéPress - Pokédex
+{% endblock title %}
+
+
+{% block content %}
+<p>This page just shows the graph for the requested pokemon</p>
+
+
+<p> {{ pokemon }}</p>
+
+<p><ul>
+        <li>{{ stats.0.stat.name }}: {{ stats.0.base_stat }} base points</li>
+        <li>{{ stats.1.stat.name }}: {{ stats.1.base_stat }} base points</li>
+        <li>{{ stats.2.stat.name }}: {{ stats.2.base_stat }} base points</li>
+        <li>{{ stats.3.stat.name }}: {{ stats.3.base_stat }} base points</li>
+        <li>{{ stats.4.stat.name }}: {{ stats.4.base_stat }} base points</li>
+        <li>{{ stats.5.stat.name }}: {{ stats.5.base_stat }} base points</li>
+    </ul>
+</p>
+
+{% endblock content %}
+
+
