@@ -28,7 +28,6 @@ def graph(request):
         value = stat_key['base_stat']
         label = stat_key['stat']['name']
         line_chart.add(label, value)
-
     chart_svg = line_chart.render()
 
     context = {
@@ -47,7 +46,6 @@ def chart(request):
         value = stat_key['base_stat']
         label = stat_key['stat']['name']
         stats_chart.add(label, value)
-
     chart_svg = stats_chart.render()
 
     context = {

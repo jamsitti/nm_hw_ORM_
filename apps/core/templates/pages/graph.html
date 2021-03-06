@@ -7,16 +7,16 @@
 
 {% block content %}
 
-    <center>
+    <div>
         <h3> {{ pokemon }} </h3>
         <div class="row">
-            <img src= {{ sprite }} width="425" height="425">
+            <img src="{{ sprite }}" width="425" height="425">
             <ul> {% for stats in stats %}
                 <li>{{ stats.stat.name }}: {{ stats.base_stat }} base points</li>
                 {% endfor %}
             </ul>
         </div>
-    </center>
+    </div>
 
 <div>
     {{ rendered_chart_svg|safe }}

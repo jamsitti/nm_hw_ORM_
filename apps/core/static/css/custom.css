@@ -14,3 +14,22 @@
     margin-bottom: -10px;
 }
 
+/* None of my custom styling tags would override, even with !important, 
+   so for this one I just did a style tag on base.html, line 35. For the
+   rest I just wrote some CSS so we could troubleshoot later. */
+.logo {
+    height: 30px;
+    width: 30px; 
+}
+
+.stats-font {
+    font-size: large;
+    font-family: 'DotGothic16', sans-serif;
+    text-align: right;
+}
+
+.main-page-jumbotron {
+    text-align: center;
+    font-size: large;
+    font-family: 'DotGothic16', sans-serif;
+}

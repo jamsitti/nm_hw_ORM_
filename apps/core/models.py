@@ -1,7 +1,8 @@
 from django.db import models
 from django.forms.widgets import SplitHiddenDateTimeWidget
 
-#I made this and idk if I need it
+#I made this and I'm not sure if I need it!
+
 class Pokemon(models.Model):
     image_src = models.CharField(max_length=127)
     name = models.CharField(max_length=127)
