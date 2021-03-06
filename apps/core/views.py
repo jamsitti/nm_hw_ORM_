@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import requests
+from requests import status_codes
 import pokepy
 import pygal
 
@@ -29,28 +30,25 @@ def graph(request):
 
 
 def chart(request):
-    pie_chart = pygal.Pie()
-    pie_chart.title = '''Breloom's stat spread (in %)'''
-    pie_chart.add('IE', 19.5)
-    pie_chart.add('Firefox', 36.6)
-    pie_chart.add('Chrome', 36.3)
-    pie_chart.add('Safari', 4.5)
-    pie_chart.add('Opera', 2.3)
-    pie_chart.render()
 
-    chart = pygal.Pie()
-    for repo_dict in repo_list:
-        value = 42 # TODO: Replace this...
-        label = repo_dict["name"]
-        chart.add(label, value)
 
-    chart_svg = chart.render()
-    context = {
-        "rendered_chart_svg": chart_svg,
-    }
+    #stat_list = []
+    #for i in range(6):
+    #    stat_list += breloom_stats['stats'][str(i)]['name']
+
+    #stats_chart = pygal.Pie()
+    #stats_chart.title = "Breloom's stat spread (in %)"
+    #for repo_dict in repo_list:
+    #    value = 42 # TODO: Replace this...
+    #    label = repo_dict["name"]
+    #    chart.add(label, value)
+
+    #chart_svg = stats_chart.render()
 
     context = {
-        'pokemon': pokepy.V2Client().get_pokemon('breloom'),
+        'pokemon': breloom_name.upper(),
         'stats': breloom_stats,
+        "rendered_chart_svg": chart_svg,
+        'sprite': breloom_sprite,
     }
     return render(request, 'pages/chart.html', context)

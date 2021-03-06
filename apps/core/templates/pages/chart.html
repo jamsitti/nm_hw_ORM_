@@ -6,11 +6,13 @@
 
 
 {% block content %}
-<p>This page just shows the chart for the pokemon that has been requested</p>
 
-<p> {{ pokemon }} {{ rendered_chart_svg|safe }} </p>p
+<h3> {{ pokemon }} </h3>
+<img src= '{{ sprite }}' width="300" height="300">
+<p> {{ rendered_chart_svg|safe }} </p>
 
-<p><ul>
+<div>
+    <ul>
         <li>{{ stats.0.stat.name }}: {{ stats.0.base_stat }} base points</li>
         <li>{{ stats.1.stat.name }}: {{ stats.1.base_stat }} base points</li>
         <li>{{ stats.2.stat.name }}: {{ stats.2.base_stat }} base points</li>
@@ -18,7 +20,7 @@
         <li>{{ stats.4.stat.name }}: {{ stats.4.base_stat }} base points</li>
         <li>{{ stats.5.stat.name }}: {{ stats.5.base_stat }} base points</li>
     </ul>
-
+</div>
 {% endblock content %}
 
 
