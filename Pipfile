@@ -10,6 +10,7 @@ django-heroku = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
 bootstrap4 = "*"
+requests = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
