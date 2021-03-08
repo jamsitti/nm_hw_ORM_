@@ -11,6 +11,7 @@ gunicorn = "*"
 psycopg2-binary = "*"
 bootstrap4 = "*"
 requests = "*"
+pygal = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
