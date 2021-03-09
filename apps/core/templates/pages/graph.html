@@ -8,8 +8,8 @@
 {% block content %}
 
     <div>
-        <h3> {{ pokemon }} </h3>
-        <div class="row">
+        <h3 style="font-weight: bold; text-align: center"> {{ pokemon }} </h3>
+        <div class="stats-font row">
             <img src="{{ sprite }}" width="425" height="425">
             <ul> {% for stats in stats %}
                 <li>{{ stats.stat.name }}: {{ stats.base_stat }} base points</li>
