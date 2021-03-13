@@ -11,12 +11,14 @@
   <p class="lead">Welcome to the  premier social site for Pokémon.</p>
   <hr class="my-4">
   </p>
-  <p class="lead">
-    <form action="{% url 'search' %}" id="searchform" method='GET'>
-      <input type="search" name="user_response" placeholder="Search a Pokemon here!" id="searchInput" class="bg-global-nav-search-input">
-      <button type="submit">Search</button>
-    </form>
-  </p>
+  <div class="row">
+    <p class="lead, col-2">
+      <form action="{% url 'search' %}" id="searchform" method='GET'>
+        <input type="search" name="user_response" placeholder="Search a Pokemon here!" id="searchInput" class="bg-global-nav-search-input">
+        <button type="submit">Search</button>
+      </form>
+    </p>
+  </div> 
 </div>
 
 

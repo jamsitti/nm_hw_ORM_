@@ -59,6 +59,7 @@ def view_all_users(request):
 
 
 def view_profile(request, username):
+    
     user = User.objects.get(username=username)
 
     if request.user == user:

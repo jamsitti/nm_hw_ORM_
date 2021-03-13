@@ -7,6 +7,5 @@ from apps.core import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('search/', views.search_page, name='search'),
-    #homepanels needs to be user teams
-    path('home_panels/', views.view_panels, name='view_panels'),
+    path('view_teams/', views.view_teams, name='view_teams'),
 ]

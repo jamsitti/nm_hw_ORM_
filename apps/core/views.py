@@ -1,16 +1,21 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 import requests
 from requests import status_codes
+from django.contrib import messages
 import pygal
 from .models import *
+from .forms import *
 
 
 #This function purely handles grabbing the pokemon data from a user input
 # when called in the search view function, which connects to the search bar
 # on the home page.
 
+
 #I need to find an efficient way to extract information that can be stored into
 # a TeamMember object for profiles to put on their teams.
+
 
 def get_api_data(form_data):
     response = requests.get('https://pokeapi.co/api/v2/pokemon/' + form_data + '/')
@@ -18,7 +23,18 @@ def get_api_data(form_data):
     return pokemon_data
 
 
+#Views functions begin here.
+
+
+def home(request):
+    context = {
+    }
+    return render(request, 'pages/home.html', context)
+
+
 def search_page(request):
+    #Loads after a pokemon is typed into homepage's searchbar, reads pokemon's
+    #data.
     search_term = request.GET['user_response']
     print(search_term)
 
@@ -26,7 +42,8 @@ def search_page(request):
     pokemon_stats = pokemon_data['stats']
     pokemon_name = pokemon_data['name']
     pokemon_img = pokemon_data['sprites']['other']['official-artwork']['front_default']
-    
+    pokemon_sprite = pokemon_data['sprites']['front_default'] #?
+
     line_chart = pygal.HorizontalBar()
     line_chart.title = pokemon_name.capitalize() + ' stat spread'
     for stat_key in pokemon_stats:
@@ -47,10 +64,79 @@ def search_page(request):
     return render(request, 'pages/search.html', context)
 
 
-def home(request):
+@login_required
+def user_page(request, username):
+    user = User.objects.get(username=username)
+
+    # CREATE tweets
+    if request.method == 'POST':
+
+        # Create a form instance and populate it with data from the request,
+        # including uploaded files
+        form = CreateTeamForm(request.POST)
+
+        if form.is_valid():
+            # Use the form to save
+            team = form.save(commit=False)
+            team.user = request.user
+            team.save()
+            # Cool trick to redirect to the previous page
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
+@login_required
+def update_team(request, team_id):
+    team_name = request.POST['teamname']
+    team_slogan = request.POST['team_slogan']
+
+    # Update the tweet
+    team = UserTeams.objects.get(id=team_id)
+    team.teamname = team_name
+    team.team_slogan = team_slogan
+    team.save()
+
+    # Redirect to wherever they came from
+    return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
+@login_required
+def view_teams(request):
+    #Reads all team objects onto teams page.
+    all_teams = UserTeams.objects.all()
     context = {
+        "all_teams": all_teams,
     }
-    return render(request, 'pages/home.html', context)
+    return render(request, "pages/view_teams.html", context)
+
+#TODO: Need to define poke_id!
+
+@login_required
+def add_pokemon(request, poke_id):
+    pokemon = Pokemon.objects.get(id=poke_id)
+    userTeam = UserTeams.objects.get(user=request.user)
+
+    if len(userTeam) < 6: #??????
+        pokemon.liked.add(request.userTeam)
+        user.team.save()
+        messages.success(request, 'Pokemon added to team!')
+    else:
+        messages.MessageFailure(request, 'You already have a full team')
+
+    # Redirect to wherever they came from
+    return redirect(request.META.get('HTTP_REFERER', '/'))
+
+@login_required
+def remove_pokemon(request, poke_id):
+    team_pokemon = Pokemon.objects.get(id=poke_id)
+
+    # BONUS: Security
+    if team_pokemon.creator_user == request.user:
+        team_pokemon.delete()
+
+    return redirect('/')
+
+
+
 
 #Before I had view functions that make prespecified static pages, now id like to
 # have one page for viewing a pokemons data and have the focus be on userTeam. user
@@ -73,17 +159,6 @@ def home(request):
 # 5) a page that shows a certain amount of the users and their team on a widget
 # perhaps about like 15 users? [READ]
 
-#Need to specify...........
-# User class/models, userTeam models (he called this the dashboard, the representation
-# of my data in a graph or visual thing,
-# these are n:1 towards Users), teamMember class/models (dashboard panel?, 
-# these are n:1 towards userTeam), Pokemon class? Like an abstract class that will
-# get certain information on a pokemon if requested
-
-#FORMS............
-# login form, sign up for, edit profile form, edit team form, also need to
-# make something that adds or deletes a pokemon from team IF user is logged in
-# and user if viewing a display pokemon page
 
 #Have to make all of this accesible through the admin page?? Like gorl idk bout dat
 
@@ -98,12 +173,6 @@ def home(request):
 
     #1. Use it in a view. For example:
 
-def view_panels(request):
-    dboard_panels = TeamDashboardPanel.objects.all()
-    context = {
-        "all_panels": dboard_panels,
-    }
-    return render(request, "home_panels.html", context)
 
     #2. Reference it in a template. For example:
     #{% for panel in dboard_panels %}
