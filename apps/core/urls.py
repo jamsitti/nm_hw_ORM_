@@ -2,7 +2,7 @@ from django.urls import path
 
 from apps.core import views
 
-#goooooorl you gon need lots of urls
+#you gon need lots of urls
 
 urlpatterns = [
     path('', views.home, name='home'),
