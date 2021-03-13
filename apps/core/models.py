@@ -45,6 +45,12 @@ class TeamDashboardPanel(models.Model):
     #admin.site.register(TeamDashboardPanel)
 
 #model for search inquiry for a pokemon?
+
+#So far I have gotten the search page to load without adding pokemon data
+# to this database.
+
+#Itd be great if I could have a selection from a dropdown that changes when you
+# type letters, but how do I get each pokemon name into a database
 class SearchInquiry(models.Model):
     pokemon_name = models.CharField(max_length=100)
 
@@ -52,3 +58,28 @@ class InquiryForm(forms.ModelForm):
     class Meta:
         model = SearchInquiry
         fields = ['pokemon_name']
+
+#Need a model for UserTeams
+#   put n:1 connection with profiles, even though their can be 1:1. This is bc
+#   if a profile gets deleted, their team needs to CASCADE del as well
+class UserTeam(models.Model):
+    #username = connect this with User profile
+    #teamname = let them pick a nameeeeeee
+    #pokemon_1 = #make sure its not necessary, add these through search page
+    #through a little icon like a catch and a release
+    #pokemon_2 = 
+    #pokemon_3 = 
+    #pokemon_4 = 
+    #pokemon_5 = 
+    #pokemon_6 = 
+
+
+#Need a model for TeamPokemon
+#   dont forget to put many to one connection, many team pokemon with one team
+#   if a team is deleted, the pokemon will not be deleted. Perhaps many to many? 
+
+
+
+#Need a form for populating UserTeams with TeamPokemon object
+
+
