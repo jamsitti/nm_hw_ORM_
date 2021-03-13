@@ -12,10 +12,10 @@
   <hr class="my-4">
   </p>
   <p class="lead">
-    <a class="btn btn-primary btn-lg" href="{% url 'graph' %}" role="button">View a pokémon's stats in a graph here!</a>
-  </p>
-  <p>  
-    <a class="btn btn-primary btn-lg" href="{% url 'chart' %}" role="button">View a pokémon's stats in a chart here!</a>
+    <form action="{% url 'search' %}" id="searchform" method='GET'>
+      <input type="search" name="user_response" placeholder="Search a Pokemon here!" id="searchInput" class="bg-global-nav-search-input">
+      <button type="submit">Search</button>
+    </form>
   </p>
 </div>
 
