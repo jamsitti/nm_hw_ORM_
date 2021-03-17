@@ -9,12 +9,18 @@
 
     <div>
         <h3 style="font-weight: bold; text-align: center"> {{ pokemon }} </h3>
-        <div class="stats-font row">
-            <img src="{{ img }}" width="425" height="425">
-            <ul> {% for stats in stats %}
-                <li>{{ stats.stat.name }}: {{ stats.base_stat }} base points</li>
-                {% endfor %}
-            </ul>
+        <div class="stats-font row" style="justify-content: center"> 
+            <img src="{{ img }}" width="350" height="350">
+            <div class="col">
+                <ul style="line-height: 45px"> {% for stats in stats %}
+                        <li>{{ stats.stat.name }}: {{ stats.base_stat }} base points</li>
+                    {% endfor %}
+                </ul>
+                {% if user.is_authenticated and UserTeams.creator_user == user %}
+                    <button action='add_to_team/'> Add to team </button>
+                    <button action='remove_from_team/'> Remove from team </button>
+                {% endif %}
+            </div>
         </div>
     </div>
 

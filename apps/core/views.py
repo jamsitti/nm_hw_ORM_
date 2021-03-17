@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import requests
 from requests import status_codes
 from django.contrib import messages
@@ -23,6 +23,22 @@ def get_api_data(form_data):
     return pokemon_data
 
 
+def check_database(pokemon_name, pokemon_sprite):
+    all_pokemon = Pokemon.objects.filter(pokemon_name=pokemon_name).values()
+    already_added = False
+    print('the querySet for any objects in database with the same name is', all_pokemon)
+
+    for pokemon in all_pokemon:
+        if pokemon_name in pokemon['pokemon_name']:
+            already_added = True
+
+    if already_added == False:
+        print('Pokemon added to pokemon objects')
+        pokemon=Pokemon.objects.create(pokemon_name=pokemon_name, pokemon_sprite_url=pokemon_sprite)
+    else:
+        print('Pokemon already in database')
+
+
 #Views functions begin here.
 
 
@@ -39,10 +55,13 @@ def search_page(request):
     print(search_term)
 
     pokemon_data = get_api_data(form_data=search_term)
+
     pokemon_stats = pokemon_data['stats']
     pokemon_name = pokemon_data['name']
     pokemon_img = pokemon_data['sprites']['other']['official-artwork']['front_default']
     pokemon_sprite = pokemon_data['sprites']['front_default'] #?
+
+    check_database(pokemon_name, pokemon_sprite)
 
     line_chart = pygal.HorizontalBar()
     line_chart.title = pokemon_name.capitalize() + ' stat spread'
@@ -65,23 +84,22 @@ def search_page(request):
 
 
 @login_required
-def user_page(request, username):
-    user = User.objects.get(username=username)
-
-    # CREATE tweets
+def create_team(request):
     if request.method == 'POST':
-
-        # Create a form instance and populate it with data from the request,
-        # including uploaded files
         form = CreateTeamForm(request.POST)
 
         if form.is_valid():
-            # Use the form to save
             team = form.save(commit=False)
-            team.user = request.user
             team.save()
-            # Cool trick to redirect to the previous page
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+            messages.success(request, 'Team created successfully. Welcome!')
+            return redirect(request.META.get('HTTP_REFERER', '/view_teams/'))
+    else:
+        form = CreateTeamForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'pages/create_team.html', context)
 
 
 @login_required
@@ -111,7 +129,7 @@ def view_teams(request):
 #TODO: Need to define poke_id!
 
 @login_required
-def add_pokemon(request, poke_id):
+def add_to_team(request, poke_id):
     pokemon = Pokemon.objects.get(id=poke_id)
     userTeam = UserTeams.objects.get(user=request.user)
 
@@ -126,14 +144,14 @@ def add_pokemon(request, poke_id):
     return redirect(request.META.get('HTTP_REFERER', '/'))
 
 @login_required
-def remove_pokemon(request, poke_id):
+def remove_from_team(request, poke_id):
     team_pokemon = Pokemon.objects.get(id=poke_id)
 
     # BONUS: Security
     if team_pokemon.creator_user == request.user:
         team_pokemon.delete()
 
-    return redirect('/')
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
 
 

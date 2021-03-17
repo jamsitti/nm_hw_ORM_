@@ -21,5 +21,3 @@ class User(AbstractUser):
             size_str = ''
 
         return GRAVATAR_URL % (digest, size_str)
-
-    #add user stuff here? Like user pokemon team?

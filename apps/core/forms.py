@@ -5,7 +5,7 @@ class CreateTeamForm(forms.ModelForm):
     class Meta:
         model = UserTeams
         fields = (
-            'username', 'teamname', 'team_slogan'
+            'teamname', 'team_slogan'
         )
 
 class EditTeamForm(forms.ModelForm):

@@ -1,17 +1,19 @@
 Task list left to do (last worked on Fri 3/12 8pm):
 
 1. Pokemon model
-  - how to instantiate it
-  - connection to teams (many to many?)
+  - how to instantiate it DONEDONE
+  - connection to teams (many to many?) DONEDONE
   - how to add/remove to team (liking/disliking?)
-  - find way to use API to connect pokemon_sprite??? like ooooof
+  - find way to use API to connect pokemon_sprite??? like ooooof DONEDONE
 
 2. UserTeam model
-  - set up in html a way to create and view
-  - make sure views create it
+  - set up in html a way to create and view DONEDONE
+  - make sure views create it DONEDONE
   - have some type of "-create==true" attribute or something, to use as a key to   make sure users can only make one team and that one team is tied to their profile
   - figure out how to set that you can only have six pokemon, and how to add pokemon
   to class... gorl
+  -NEW: models wont let me import User model from accounts app, and therefore I can't link the foreignKey between UserTeams and Users. I am currently using this link to authenticate if a team has been made but because it's not working, when I load the 'teams' page it just asks if I want to make another (when I should only be able to have
+  one per account)
 
 3. User model:
   - make sure it connects to userTeam
