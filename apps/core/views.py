@@ -90,6 +90,7 @@ def create_team(request):
 
         if form.is_valid():
             team = form.save(commit=False)
+            team.creator_user = request.user
             team.save()
             messages.success(request, 'Team created successfully. Welcome!')
             return redirect(request.META.get('HTTP_REFERER', '/view_teams/'))
@@ -107,8 +108,8 @@ def update_team(request, team_id):
     team_name = request.POST['teamname']
     team_slogan = request.POST['team_slogan']
 
-    # Update the tweet
-    team = UserTeams.objects.get(id=team_id)
+    # Update the team
+    team = UserTeam.objects.get(id=team_id)
     team.teamname = team_name
     team.team_slogan = team_slogan
     team.save()
@@ -120,18 +121,36 @@ def update_team(request, team_id):
 @login_required
 def view_teams(request):
     #Reads all team objects onto teams page.
-    all_teams = UserTeams.objects.all()
-    context = {
-        "all_teams": all_teams,
-    }
-    return render(request, "pages/view_teams.html", context)
+
+    #add verification for what page needs to show
+    user = request.user.id
+    user_has_team = UserTeam.objects.filter(creator_user_id=request.user.id).exists
+    if user_has_team == True:
+        all_teams = UserTeams.objects.all()
+        context = {
+            "all_teams": all_teams,
+            'user_has_team': user_has_team,
+        }
+
+        return render(request, "pages/view_teams.html", context)
+    else:
+        load_link = True
+        context = {
+            'load_link': load_link,
+        }
+
+        return render(request, "pages/view_teams.html", context)
+
+    #if user.is_authenticated and UserTeams.creator_user != request.user:
+
+
 
 #TODO: Need to define poke_id!
 
 @login_required
 def add_to_team(request, poke_id):
     pokemon = Pokemon.objects.get(id=poke_id)
-    userTeam = UserTeams.objects.get(user=request.user)
+    userTeam = UserTeam.objects.get(user=request.user)
 
     if len(userTeam) < 6: #??????
         pokemon.liked.add(request.userTeam)

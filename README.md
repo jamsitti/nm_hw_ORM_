@@ -45,3 +45,11 @@ Task list left to do (last worked on Fri 3/12 8pm):
 11. like and delete you already know you gotta deal with this stuff
 
 12. Figure out what html pages you need to create and then... create them
+
+AFTER OFFICE HOURS
+
+- change userteas to UserTeam DONEDONE
+
+- change foreign key to assigned team DONEDONE
+
+- change liked to pokemon on team DONEDONE

@@ -8,19 +8,17 @@
 <div class="row">
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <h1>Trainer Teams</h1>
-        {% if user.is_authenticated and UserTeams.creator_user != user %}
+        {% if load_link is True %}
             <a href="create_team/">No team?! Create a team here!</a>
         {% endif %}
-        {% if user.is_authenticated and UserTeams.creator_user == user %}
-            {% for team in all_teams %}
-                <a href="{% url "view_teams" team.username %}">
-                    <div class="card card-signin card-user my-5">
-                        <img src="{{ user.gravatar }}" />
-                        <h5 class="card-title text-center">@{{ team.username }}</h5>
-                    </div>
-                </a>
-            {% endfor %}
-        {% endif %}
+        {% for team in all_teams %}
+            <!-- <a href="{% url "view_teams" team.teamname %}"> -->
+                <div class="card card-signin card-user my-5">
+                    <img src="{{ user.gravatar }}" />
+                    <h5 class="card-title text-center">@{{ team.teamname }}</h5>
+                </div>
+            </a>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
